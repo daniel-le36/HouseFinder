@@ -8,23 +8,20 @@ const MapObj = ReactMapboxGl({
 class Map extends Component {
   render() {
     return (
-      <div>
+      <div id="MapboxContainer">
         <MapObj
           style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={{
-            height: "100vh",
-            width: "100vw",
-          }}
+          containerStyle={{ height: "95vh", width: "50vw", marginRight: "0" }}
+          center={[-79.5618, 43.8425]}
         >
           <Layer
             type="symbol"
             id="marker"
             layout={{ "icon-image": "marker-15" }}
           >
-            <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+            <Feature coordinates={[-79.5618, 43.8425]} />
           </Layer>
         </MapObj>
-        ;
       </div>
     );
   }
