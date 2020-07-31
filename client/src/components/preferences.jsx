@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Dropdown } from "semantic-ui-react";
+import { List, Dropdown, Button } from "semantic-ui-react";
 class Preferences extends Component {
   state = {
     housePrefs: [
@@ -9,6 +9,15 @@ class Preferences extends Component {
     ],
     selectedPrefs: [],
   };
+
+  componentDidMount() {
+    fetch("http://127.0.0.1:5000/getpreferences")
+      .then((res) => res.json())
+      .then((result) => {
+        // Get the list of preferences from the server
+        this.setState({ housePrefs: result["preferences"] });
+      });
+  }
 
   // Select a preference from the dropdown and add to list
   SelectPref = (event, { value }) => {
@@ -51,6 +60,7 @@ class Preferences extends Component {
           selection
           selectOnNavigation={false}
           selectOnBlur={false}
+          value=""
           onChange={this.SelectPref}
           options={this.state.housePrefs
             .filter(
@@ -87,6 +97,7 @@ class Preferences extends Component {
             </List.Item>
           ))}
         </List>
+        <Button>yeet</Button>
       </div>
     );
   }
