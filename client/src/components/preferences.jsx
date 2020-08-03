@@ -97,7 +97,6 @@ class Preferences extends Component {
             </List.Item>
           ))}
         </List>
-        <Button onClick={this.props.help}>HELP</Button>
         <Button
           onClick={() =>
             this.props.getNeighbourhoods(
@@ -107,7 +106,7 @@ class Preferences extends Component {
             )
           }
         >
-          yeet
+          Update
         </Button>
       </div>
     );

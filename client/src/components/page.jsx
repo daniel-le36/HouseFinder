@@ -39,10 +39,7 @@ class Page extends Component {
   render() {
     return (
       <div className="App" style={{ display: "flex" }}>
-        <Preferences
-          getNeighbourhoods={this.GetNeighbourhoods}
-          help={this.UpdateSettings}
-        />
+        <Preferences getNeighbourhoods={this.GetNeighbourhoods} />
         <Map
           areas={this.state.neighbourhoods}
           geojson={this.state.geojson}
