@@ -1,13 +1,9 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Map from "./components/map";
+import Page from "./components/page";
+
 function App() {
-  return (
-    <div className="App">
-      <Map />
-    </div>
-  );
+  return <Page />;
 }
 
 export default App;

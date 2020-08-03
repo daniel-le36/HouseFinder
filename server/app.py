@@ -20,15 +20,25 @@ def createTrees():
         newNeighbourhood = Neighbourhood(polygon)
         NeighbourhoodList.append(newNeighbourhood)
     return NeighbourhoodList
+
+# Get the locations for the specified category
 def getLocations(pref):
     locations = json.load(open('locations.json', encoding='utf-8'))
     locations = [[location['longitude'],location['latitude']] for location in locations['locations'] if location['category'] == pref]
     return locations
+
 # Calculate the score for a neighbourhood based on its distance and preference ranking
 def calculateScore(distance,position):
     score = (1 / distance) * (1 / (position+1))
     return score
 
+# Create a geojson for the neighbourhoods
+def createGeoJson(coordList):
+    geojson = {'type':'FeatureCollection','features':[]}
+    for coord in coordList:
+        newFeature = {'type':'Feature','geometry':{'type':'Polygon','coordinates':[coord['coords']]}}
+        geojson['features'].append(newFeature)
+    return geojson
 neighbourhoods = createTrees()
 
 app = Flask(__name__)
@@ -51,12 +61,18 @@ def getHouses():
     chosenPrefs = requestData["preferences"]
     nhList = neighbourhoods
     for i in range(len(chosenPrefs)):
+        # Get the coordinates of the locations for the given preference
         locations = getLocations(chosenPrefs[i])
         for nh in nhList:
+            # Query the KD-Tree for this neighbourhood with the locations
             queryRes = nh.coordTree.query(locations)
             closestCoords = nh.coordTree.data[queryRes[1]]
+            # For each location, get the distance from the neighbourhood to that location
             for i in range(len(closestCoords)):   
-                distance = geopy.distance.distance(locations[i],closestCoords[i])
+                distance = geopy.distance.distance(locations[i],closestCoords[i]).km
+                # Calculate the score and add to the neighbourhood
                 nh.score += calculateScore(distance,i)
-    return {'neighbourhoods':nhList.sort(key=operator.attrgetter("score"), reverse=True)}
+    sortedNhList = [{'coords':nh.coords,'score':nh.score} for nh in nhList]
+    sortedNhList.sort(key=operator.itemgetter("score"), reverse=True)
+    return {'neighbourhoods':createGeoJson(sortedNhList[:10])}
 app.run()

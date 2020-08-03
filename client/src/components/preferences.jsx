@@ -97,7 +97,18 @@ class Preferences extends Component {
             </List.Item>
           ))}
         </List>
-        <Button>yeet</Button>
+        <Button onClick={this.props.help}>HELP</Button>
+        <Button
+          onClick={() =>
+            this.props.getNeighbourhoods(
+              this.state.selectedPrefs.map((pref) => {
+                return pref.factor;
+              })
+            )
+          }
+        >
+          yeet
+        </Button>
       </div>
     );
   }

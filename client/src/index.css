@@ -19,3 +19,13 @@ code {
 #PreferencesContainer {
   flex: 25%;
 }
+
+#NeighbourhoodsContainer {
+  flex: 25%;
+}
+
+.mapContainer {
+  height: 95vh;
+  width: 50vw;
+  margin-right: 0;
+}
