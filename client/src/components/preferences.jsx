@@ -101,7 +101,7 @@ class Preferences extends Component {
           onClick={() =>
             this.props.getNeighbourhoods(
               this.state.selectedPrefs.map((pref) => {
-                return pref.factor;
+                return pref.id;
               })
             )
           }
