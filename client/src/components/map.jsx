@@ -1,30 +1,60 @@
 import React, { Component } from "react";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import mapboxgl from "mapbox-gl";
 
-const Maps = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiZmVlbHNicmVhZG1hbiIsImEiOiJja2Q3ejJyeTMwNXNwMnlwbWVpMm9qMWRzIn0.9QWRsTV_8GVh1-i63Nu3Qg",
-});
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiZmVlbHNicmVhZG1hbiIsImEiOiJja2Q3ejJyeTMwNXNwMnlwbWVpMm9qMWRzIn0.9QWRsTV_8GVh1-i63Nu3Qg";
+
 class Map extends Component {
+  state = {
+    lng: -79.5618,
+    lat: 43.8425,
+    zoom: 22,
+    map: null,
+    geojson: {},
+  };
+  componentDidMount() {
+    // Initialize map
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: "mapbox://styles/mapbox/streets-v9",
+      center: [this.state.lng, this.state.lat],
+      zoom: this.state.zoom,
+    });
+    this.map.on("load", () => {
+      this.map.addSource("area", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: [],
+        },
+      });
+      this.map.addLayer({
+        id: "area",
+        type: "fill",
+        source: "area",
+        layout: {},
+        paint: {
+          "fill-color": "#088",
+          "fill-opacity": 0.8,
+        },
+      });
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // If the active neighbourhood changed, pan to the new one
+    if (prevProps.activeIndex !== this.props.activeIndex) {
+      this.map.setZoom(15);
+      this.map.panTo(this.props.activeCoords);
+    }
+    // Update map data
+    this.map.getSource("area").setData(this.props.geojson);
+  }
+
   render() {
     return (
-      <div>
-        <Maps
-          style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={{
-            height: "100vh",
-            width: "100vw",
-          }}
-        >
-          <Layer
-            type="symbol"
-            id="marker"
-            layout={{ "icon-image": "marker-15" }}
-          >
-            <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-          </Layer>
-        </Maps>
-        ;
+      <div id="MapboxContainer">
+        <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
       </div>
     );
   }
