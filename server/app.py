@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import json
 import sqlite3
+import pymysql
+pymysql.install_as_MySQLdb()
+pymysql.version_info = (1, 3, 13, 'final', 0)
 
 # Create a geojson for the neighbourhoods
 def createGeoJson(coordList):
