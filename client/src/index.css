@@ -29,3 +29,19 @@ code {
   width: 50vw;
   margin-right: 0;
 }
+.areaSelect {
+  cursor: pointer;
+  font-size: 15px;
+}
+.prefButton {
+  cursor: pointer;
+}
+.prefButton:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.prefFactor {
+  float: left;
+  width: 338px;
+  text-align: left;
+  padding-left: 20px;
+}

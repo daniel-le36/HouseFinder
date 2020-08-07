@@ -78,22 +78,30 @@ class Preferences extends Component {
             })}
         />
         {/* List of selected preferences */}
-        <List>
+        <List relaxed>
           {this.state.selectedPrefs.map((pref, index) => (
-            <List.Item key={pref.id} style={{ display: "flex" }}>
-              <List.Content>{pref.factor}</List.Content>
-              <List.Icon
-                name="chevron up"
-                onClick={() => this.ShiftItem(pref.id, -1)}
-              />
-              <List.Icon
-                name="chevron down"
-                onClick={() => this.ShiftItem(pref.id, 1)}
-              />
-              <List.Icon
-                name="cancel"
-                onClick={() => this.RemovePref(pref.id)}
-              />
+            <List.Item key={pref.id}>
+              <List.Content>
+                <span className="prefFactor">{pref.factor}</span>
+                <List.Icon
+                  className="prefButton"
+                  circular
+                  name="chevron up"
+                  onClick={() => this.ShiftItem(pref.id, -1)}
+                />
+                <List.Icon
+                  className="prefButton"
+                  circular
+                  name="chevron down"
+                  onClick={() => this.ShiftItem(pref.id, 1)}
+                />
+                <List.Icon
+                  className="prefButton"
+                  circular
+                  name="cancel"
+                  onClick={() => this.RemovePref(pref.id)}
+                />
+              </List.Content>
             </List.Item>
           ))}
         </List>

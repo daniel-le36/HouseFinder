@@ -51,14 +51,19 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def home():
     return {'cont':200}
 
+@app.route('/getboundary',methods=['GET'])
+def getboundary():
+    boundary = json.load(open('Vaughan_Boundary.geojson', encoding='utf-8'))
+    return {'geojson':boundary}
+
 @app.route('/getpreferences',methods=['GET'])
 def getprefs():
     conn = sqlite3.connect('GeoData.db')
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
-    c.execute('SELECT * FROM Categories')
+    c.execute('SELECT * FROM Categories ORDER BY Name')
     categories = c.fetchall()
-    conn.close()
+    conn.close()    
     
     categoryList = []
     for category in categories:
