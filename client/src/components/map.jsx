@@ -13,7 +13,9 @@ class Map extends Component {
     geojson: {},
   };
   componentDidMount() {
-    fetch("http://127.0.0.1:5000/getboundary")
+    fetch(
+      "https://f33qcxxglc.execute-api.us-east-1.amazonaws.com/production/getboundary"
+    )
       .then((res) => res.json())
       .then((result) => {
         // Initialize map

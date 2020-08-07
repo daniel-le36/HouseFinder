@@ -15,15 +15,18 @@ class Page extends Component {
 
   // Get the neighbourhoods from the server
   GetNeighbourhoods = (preferences) => {
-    fetch("http://127.0.0.1:5000/getrankedhouses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        preferences: preferences,
-      }),
-    })
+    fetch(
+      "https://f33qcxxglc.execute-api.us-east-1.amazonaws.com/production/getrankedhouses",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          preferences: preferences,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         // Get the list of preferences from the server

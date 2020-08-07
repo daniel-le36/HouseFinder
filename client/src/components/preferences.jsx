@@ -11,7 +11,9 @@ class Preferences extends Component {
   };
 
   componentDidMount() {
-    fetch("http://127.0.0.1:5000/getpreferences")
+    fetch(
+      "https://f33qcxxglc.execute-api.us-east-1.amazonaws.com/production/getpreferences"
+    )
       .then((res) => res.json())
       .then((result) => {
         // Get the list of preferences from the server
