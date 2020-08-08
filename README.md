@@ -2,10 +2,6 @@
 
 Web application for finding neighbourhoods that suit your preferences. Choose and rank services you want near your neighbourhood like schools, grocery stores, and zoos to see the top ten neighbourhoods that match your preferences. Try out my project [here](https://master.dvkzgxknbigt2.amplifyapp.com/)
 
-## Getting Started
-
-This project is built with React and Python Flask so you will need these to run the project. A Docker file will be available soon.
-
 ## Built With
 
 - React
